@@ -5,17 +5,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "user")
-public class User {
+@Table(name = "sale")
+public class Sale {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length = 100, nullable = false)
-    private String name;
-    private boolean isEnabled;
+    @Column(name = "sale_date",nullable = false)
+    private LocalDate date;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }
