@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -25,6 +26,6 @@ public class Sale {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToOne(mappedBy = "sale", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "sale", fetch = FetchType.LAZY)
     private List<ItemSale> items;
 }

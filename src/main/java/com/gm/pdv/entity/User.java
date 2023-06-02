@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -22,6 +23,6 @@ public class User {
 
     private boolean isEnabled;
 
-    @OneToOne(mappedBy = "user")
+    @OneToMany(mappedBy = "user")
     private List<Sale> sales;
 }
