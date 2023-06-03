@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.net.ssl.HttpsURLConnection;
 import java.util.Optional;
 
 @RestController
@@ -45,11 +43,11 @@ public class UserController {
        return  ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity delete(@PathVariable Long id) {
         try {
             userRepository.deleteById(id);
-            return  new ResponseEntity<>("User successfully removed",HttpStatus.OK);
+            return  new ResponseEntity<>("User with id " + id + ", successfully removed!",HttpStatus.OK);
 
         }catch (Exception error){
             return  new ResponseEntity<>(error.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
