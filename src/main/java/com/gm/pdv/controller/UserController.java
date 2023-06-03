@@ -7,6 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.net.ssl.HttpsURLConnection;
+import java.util.Optional;
+
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
@@ -17,17 +20,39 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping("/listar")
-    public ResponseEntity listarTodos(){
+    @GetMapping("/listAll")
+    public ResponseEntity listAll(){
         return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
     }
 
-    @PostMapping("/inserir")
+    @PostMapping("/insert")
     public ResponseEntity insert(@RequestBody User user){
         try {
+            user.setEnabled(true);
             return new ResponseEntity<>(userRepository.save(user), HttpStatus.CREATED );
         }catch (Exception error){
             return new ResponseEntity<>(error.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity update(@RequestBody User user){
+       Optional<User> userToEdit  = userRepository.findById(user.getId());
+       if (userToEdit.isPresent()){
+           userRepository.save(user);
+           return new ResponseEntity<>(user,HttpStatus.OK);
+       }
+       return  ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity delete(@PathVariable Long id) {
+        try {
+            userRepository.deleteById(id);
+            return  new ResponseEntity<>("User successfully removed",HttpStatus.OK);
+
+        }catch (Exception error){
+            return  new ResponseEntity<>(error.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
