@@ -20,6 +20,7 @@ public class UserController {
 
     @GetMapping("/listAll")
     public ResponseEntity listAll(){
+
         return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
     }
 

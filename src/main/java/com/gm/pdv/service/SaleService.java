@@ -12,6 +12,8 @@ import com.gm.pdv.repository.SaleRepository;
 import com.gm.pdv.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,17 +27,19 @@ public class SaleService {
     private final SaleRepository saleRepository;
     private final ItemSaleRepository itemSaleRepository;
 
+    @Transactional
     public long save(SaleDTO  sale){
         User user = userRepository.findById(sale.getUserid()).get();
+
         Sale newSale = new Sale();
-        newSale.setDate(LocalDate.now());
         newSale.setUser(user);
+        newSale.setDate(LocalDate.now());
         List<ItemSale> items = getItemsSale(sale.getItems());
 
         newSale = saleRepository.save(newSale);
 
         saveItemsSale(items, newSale);
-        
+
         return newSale.getId();
     }
 
@@ -50,6 +54,7 @@ public class SaleService {
 
         return  products.stream().map(item -> {
             Product product = productRepository.getReferenceById(item.getProductid());
+
             ItemSale itemSale = new ItemSale();
             itemSale.setProduct(product);
             itemSale.setQuantity(item.getQuantity());
