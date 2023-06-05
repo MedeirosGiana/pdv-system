@@ -18,6 +18,11 @@ public class SaleController {
         return new ResponseEntity<>(saleService.findAll(),HttpStatus.OK);
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity getById(@PathVariable long id){
+        return  new ResponseEntity<>(saleService.findById(id),HttpStatus.OK);
+    }
+
     @PostMapping("/insert")
     public ResponseEntity post(@RequestBody SaleDTO saleDTO){
         try {
