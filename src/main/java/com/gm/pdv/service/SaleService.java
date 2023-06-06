@@ -85,6 +85,15 @@ public class SaleService {
             ItemSale itemSale = new ItemSale();
             itemSale.setProduct(product);
             itemSale.setQuantity(item.getQuantity());
+            
+            if (product.getQuantity() == 0){
+                throw new IllegalArgumentException();
+            } else if (product.getQuantity() < item.getQuantity()) {
+                throw new IllegalArgumentException();
+            }
+
+            int total = product.getQuantity() - item.getQuantity();
+            product.setQuantity(total);
 
             return itemSale;
 
