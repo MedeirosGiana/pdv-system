@@ -8,12 +8,13 @@ import com.gm.pdv.entity.ItemSale;
 import com.gm.pdv.entity.Product;
 import com.gm.pdv.entity.Sale;
 import com.gm.pdv.entity.User;
+import com.gm.pdv.exceptions.InvalidOperationException;
+import com.gm.pdv.exceptions.NoItemException;
 import com.gm.pdv.repository.ItemSaleRepository;
 import com.gm.pdv.repository.ProductRepository;
 import com.gm.pdv.repository.SaleRepository;
 import com.gm.pdv.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -87,19 +88,19 @@ public class SaleService {
             itemSale.setQuantity(item.getQuantity());
             
             if (product.getQuantity() == 0){
-                throw new IllegalArgumentException();
+                throw new NoItemException("Product not available in stock.");
             } else if (product.getQuantity() < item.getQuantity()) {
-                throw new IllegalArgumentException();
+                throw new InvalidOperationException(
+                        String.format("Quantity of items from the sale (%s) " +
+                        "is less than the quantity available in stock (%s) ", item.getQuantity(), product.getQuantity()));
             }
-
+            
             int total = product.getQuantity() - item.getQuantity();
             product.setQuantity(total);
 
             return itemSale;
 
         }).collect(Collectors.toList());
-
-
     }
 
     public SaleInfoDTO findById(long id) {

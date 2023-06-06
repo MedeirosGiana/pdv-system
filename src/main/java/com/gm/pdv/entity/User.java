@@ -1,5 +1,6 @@
 package com.gm.pdv.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "user")
-public class User {
+public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,7 +23,7 @@ public class User {
     private String name;
 
     private boolean isEnabled;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Sale> sales;
 }
