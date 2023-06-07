@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -20,12 +22,11 @@ public class UserController {
 
     @GetMapping("/listAll")
     public ResponseEntity listAll(){
-
         return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
     }
 
     @PostMapping("/insert")
-    public ResponseEntity insert(@RequestBody User user){
+    public ResponseEntity insert(@Valid @RequestBody UserDTO user){
         try {
             user.setEnabled(true);
             return new ResponseEntity<>(userService.save(user), HttpStatus.CREATED );
@@ -35,11 +36,9 @@ public class UserController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity update(@RequestBody User user){
+    public ResponseEntity update(@Valid @RequestBody UserDTO user){
        try {
            return new ResponseEntity<>(userService.update(user), HttpStatus.OK);
-       } catch (NoItemException error){
-           return new ResponseEntity<>(new ResponseDTO(error.getMessage()),HttpStatus.BAD_REQUEST);
        } catch (Exception error){
            return new ResponseEntity<>(new ResponseDTO(error.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
        }

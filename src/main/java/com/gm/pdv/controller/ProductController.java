@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/product")
 public class ProductController {
@@ -21,20 +23,18 @@ public class ProductController {
     }
 
     @PostMapping("/insert")
-    public ResponseEntity insert (@RequestBody Product product){
+    public ResponseEntity insert (@Valid @RequestBody Product product){
         try {
             return  new ResponseEntity<>(productRepository.save(product), HttpStatus.CREATED);
-
         }catch (Exception error){
             return  new ResponseEntity<>(new ResponseDTO(error.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PutMapping("/update")
-    public ResponseEntity update(@RequestBody Product product){
+    public ResponseEntity update(@Valid @RequestBody Product product){
         try {
             return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
-
         }catch (Exception error){
             return  new ResponseEntity<>(new ResponseDTO(error.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -53,5 +53,4 @@ public class ProductController {
             return new ResponseEntity<>(new ResponseDTO(error.getMessage()), HttpStatus.NO_CONTENT);
         }
     }
-
 }

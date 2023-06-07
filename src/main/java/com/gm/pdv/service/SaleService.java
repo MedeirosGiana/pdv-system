@@ -16,10 +16,12 @@ import com.gm.pdv.repository.SaleRepository;
 import com.gm.pdv.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,6 +48,10 @@ public class SaleService {
     }
 
     private List<ProductInfoDTO> getProductInfo(List<ItemSale> items) {
+        if (CollectionUtils.isEmpty(items)){
+            return Collections.emptyList();
+        }
+
         return items.stream().map(
                 item ->ProductInfoDTO
                         .builder()

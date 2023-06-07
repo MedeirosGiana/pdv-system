@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class User{
     private Long id;
 
     @Column(length = 100, nullable = false)
+    @NotBlank(message = "Name field is required.")
     private String name;
 
     private boolean isEnabled;
