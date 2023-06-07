@@ -6,11 +6,10 @@ import com.gm.pdv.entity.User;
 import com.gm.pdv.exceptions.NoItemException;
 import com.gm.pdv.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
@@ -39,8 +38,10 @@ public class UserController {
     public ResponseEntity update(@RequestBody User user){
        try {
            return new ResponseEntity<>(userService.update(user), HttpStatus.OK);
-       }catch (NoItemException error){
-           return new ResponseEntity<>(new ResponseDTO(error.getMessage(), user),HttpStatus.BAD_REQUEST);
+       } catch (NoItemException error){
+           return new ResponseEntity<>(new ResponseDTO(error.getMessage()),HttpStatus.BAD_REQUEST);
+       } catch (Exception error){
+           return new ResponseEntity<>(new ResponseDTO(error.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
        }
     }
 
@@ -48,9 +49,12 @@ public class UserController {
     public ResponseEntity delete(@PathVariable Long id) {
         try {
             userService.deleteById(id);
-            return  new ResponseEntity<>("User with id " + id + ", successfully removed!",HttpStatus.OK);
+            return  new ResponseEntity<>(new ResponseDTO("User with id " + id + ", successfully removed!"), HttpStatus.OK);
 
-        }catch (Exception error){
+        } catch (EmptyResultDataAccessException error){
+            return  new ResponseEntity<>(new ResponseDTO("The user could not be found!"),HttpStatus.BAD_REQUEST);
+        }
+        catch (Exception error){
             return  new ResponseEntity<>(error.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

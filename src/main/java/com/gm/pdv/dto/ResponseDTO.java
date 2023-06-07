@@ -14,7 +14,7 @@ import java.util.List;
 public class ResponseDTO {
     private List<String> messages;
 
-    public ResponseDTO(String messages, User user) {
+    public ResponseDTO(String messages) {
         this.messages = Arrays.asList(messages);
     }
 }

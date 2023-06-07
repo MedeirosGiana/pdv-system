@@ -1,5 +1,6 @@
 package com.gm.pdv.controller;
 
+import com.gm.pdv.dto.ResponseDTO;
 import com.gm.pdv.dto.SaleDTO;
 import com.gm.pdv.exceptions.InvalidOperationException;
 import com.gm.pdv.exceptions.NoItemException;
@@ -22,20 +23,23 @@ public class SaleController {
 
     @GetMapping("{id}")
     public ResponseEntity getById(@PathVariable long id){
-        return  new ResponseEntity<>(saleService.findById(id),HttpStatus.OK);
+        try {
+            return  new ResponseEntity<>(saleService.findById(id),HttpStatus.OK);
+        }catch (NoItemException | InvalidOperationException error){
+            return  new ResponseEntity<>(error.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping("/insert")
     public ResponseEntity post(@RequestBody SaleDTO saleDTO){
         try {
             long id = saleService.save(saleDTO);
-            return  new ResponseEntity<>("Sale successfully carried out: "+ id, HttpStatus.CREATED);
+            return  new ResponseEntity<>(new ResponseDTO("Sale successfully carried out: "+ id), HttpStatus.CREATED);
         }catch (InvalidOperationException | NoItemException error){
             return  new ResponseEntity<>(error.getMessage(),HttpStatus.BAD_REQUEST);
         }
         catch (Exception error){
-            return new ResponseEntity<>(error.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new ResponseDTO(error.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 }

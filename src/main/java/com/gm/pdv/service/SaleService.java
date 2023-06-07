@@ -94,7 +94,7 @@ public class SaleService {
                         String.format("Quantity of items from the sale (%s) " +
                         "is less than the quantity available in stock (%s) ", item.getQuantity(), product.getQuantity()));
             }
-            
+
             int total = product.getQuantity() - item.getQuantity();
             product.setQuantity(total);
 
