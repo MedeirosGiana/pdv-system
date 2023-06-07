@@ -38,21 +38,21 @@ public class SaleService {
     }
 
     private SaleInfoDTO getSaleInfo(Sale sale) {
-        SaleInfoDTO saleInfoDTO = new SaleInfoDTO();
-        saleInfoDTO.setUser(sale.getUser().getName());
-        saleInfoDTO.setDate(sale.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-        saleInfoDTO.setProducts(getProductInfo(sale.getItems()));
-        return saleInfoDTO;
+        return SaleInfoDTO.builder()
+                .user(sale.getUser().getName())
+                .date(sale.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
+                .products(getProductInfo(sale.getItems()))
+                .build();
     }
 
     private List<ProductInfoDTO> getProductInfo(List<ItemSale> items) {
-        return items.stream().map(item -> {
-            ProductInfoDTO productInfoDTO = new ProductInfoDTO();
-            productInfoDTO.setDescription(item.getProduct().getDescription());
-            productInfoDTO.setQuantity(item.getQuantity());
-            return productInfoDTO;
-        }).collect(Collectors.toList());
-
+        return items.stream().map(
+                item ->ProductInfoDTO
+                        .builder()
+                        .id(item.getId())
+                        .description(item.getProduct().getDescription())
+                        .quantity(item.getQuantity()).build()
+            ).collect(Collectors.toList());
     }
 
     @Transactional

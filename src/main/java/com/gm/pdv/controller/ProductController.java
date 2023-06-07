@@ -12,11 +12,8 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/product")
 public class ProductController {
+    @Autowired
     private ProductRepository productRepository;
-
-    public ProductController(@Autowired  ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
 
     @GetMapping("/listAll")
     public ResponseEntity listAll(){
