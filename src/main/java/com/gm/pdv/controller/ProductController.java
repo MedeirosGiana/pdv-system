@@ -1,8 +1,10 @@
 package com.gm.pdv.controller;
 
+import com.gm.pdv.dto.ProductDTO;
 import com.gm.pdv.dto.ResponseDTO;
 import com.gm.pdv.entity.Product;
 import com.gm.pdv.repository.ProductRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,7 @@ import javax.validation.Valid;
 public class ProductController {
     @Autowired
     private ProductRepository productRepository;
+    private ModelMapper mapper = new ModelMapper();
 
     @GetMapping("/listAll")
     public ResponseEntity listAll(){
@@ -23,18 +26,18 @@ public class ProductController {
     }
 
     @PostMapping("/insert")
-    public ResponseEntity insert (@Valid @RequestBody Product product){
+    public ResponseEntity insert (@Valid @RequestBody ProductDTO product){
         try {
-            return  new ResponseEntity<>(productRepository.save(product), HttpStatus.CREATED);
+            return  new ResponseEntity<>(productRepository.save(mapper.map(product,Product.class)), HttpStatus.CREATED);
         }catch (Exception error){
             return  new ResponseEntity<>(new ResponseDTO(error.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PutMapping("/update")
-    public ResponseEntity update(@Valid @RequestBody Product product){
+    public ResponseEntity update(@Valid @RequestBody ProductDTO product){
         try {
-            return new ResponseEntity<>(productRepository.save(product), HttpStatus.OK);
+            return new ResponseEntity<>(productRepository.save(mapper.map(product,Product.class)), HttpStatus.OK);
         }catch (Exception error){
             return  new ResponseEntity<>(new ResponseDTO(error.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }

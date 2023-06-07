@@ -1,6 +1,6 @@
 package com.gm.pdv.service;
 
-import com.gm.pdv.dto.ProductDTO;
+import com.gm.pdv.dto.ProductSaleDTO;
 import com.gm.pdv.dto.ProductInfoDTO;
 import com.gm.pdv.dto.SaleDTO;
 import com.gm.pdv.dto.SaleInfoDTO;
@@ -84,7 +84,7 @@ public class SaleService {
         }
     }
 
-    private List<ItemSale> getItemsSale(List<ProductDTO> products){
+    private List<ItemSale> getItemsSale(List<ProductSaleDTO> products){
 
         return  products.stream().map(item -> {
             Product product = productRepository.getReferenceById(item.getProductid());
