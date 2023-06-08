@@ -24,6 +24,14 @@ public class User{
     @NotBlank(message = "Name field is required.")
     private String name;
 
+    @Column(length = 30, nullable = false)
+    @NotBlank(message = "UserName field is required.")
+    private String username;
+
+    @Column(length = 60, nullable = false)
+    @NotBlank(message = "Password field is required.")
+    private String password;
+
     private boolean isEnabled;
     @JsonIgnore
     @OneToMany(mappedBy = "user")

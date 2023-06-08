@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
@@ -40,11 +41,25 @@ public class SaleService {
     }
 
     private SaleInfoDTO getSaleInfo(Sale sale) {
+        var products = getProductInfo(sale.getItems());
+        BigDecimal total = getTotal(products);
         return SaleInfoDTO.builder()
                 .user(sale.getUser().getName())
                 .date(sale.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
-                .products(getProductInfo(sale.getItems()))
+                .products(products)
+                .total(total)
                 .build();
+    }
+
+    private BigDecimal getTotal(List<ProductInfoDTO> products) {
+        BigDecimal total = new BigDecimal(0);
+
+        for(int i = 0; i < products.size();i++){
+            ProductInfoDTO currentProduct = products.get(i);
+            total = total.add(currentProduct.getPrice()
+                    .multiply(new BigDecimal(currentProduct.getQuantity())));
+        }
+        return  total;
     }
 
     private List<ProductInfoDTO> getProductInfo(List<ItemSale> items) {
@@ -56,6 +71,7 @@ public class SaleService {
                 item ->ProductInfoDTO
                         .builder()
                         .id(item.getId())
+                        .price(item.getProduct().getPrice())
                         .description(item.getProduct().getDescription())
                         .quantity(item.getQuantity()).build()
             ).collect(Collectors.toList());
