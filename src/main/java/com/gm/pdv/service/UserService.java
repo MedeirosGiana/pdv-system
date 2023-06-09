@@ -61,4 +61,8 @@ public class UserService {
         userRepository.save(userToSave);
         return new  UserDTO(userToSave.getId(),userToSave.getName(),userToSave.getUsername(),userToSave.getPassword(), userToSave.isEnabled());
     }
+
+    public User getByUserName(String username) {
+        return userRepository.findByUserName(username);
+    }
 }
