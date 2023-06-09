@@ -1,6 +1,7 @@
 package com.gm.pdv.service;
 
 import com.gm.pdv.dto.UserDTO;
+import com.gm.pdv.dto.UserResponseDTO;
 import com.gm.pdv.entity.User;
 import com.gm.pdv.exceptions.NoItemException;
 import com.gm.pdv.repository.UserRepository;
@@ -22,10 +23,10 @@ public class UserService {
     private ModelMapper mapper = new ModelMapper();
 
     @Transactional
-    public List<UserDTO> findAll(){
+    public List<UserResponseDTO> findAll(){
         List<User> result = userRepository.findAll();
         return result.stream().map(user ->
-                new UserDTO(user.getId(),user.getName(), user.getUsername(),user.getPassword(),user.isEnabled()))
+                new UserResponseDTO(user.getId(),user.getName(), user.getUsername(),user.isEnabled()))
                 .collect(Collectors.toList());
     }
 
