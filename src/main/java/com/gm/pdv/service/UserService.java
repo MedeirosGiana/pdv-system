@@ -26,7 +26,7 @@ public class UserService {
     public List<UserResponseDTO> findAll(){
         List<User> result = userRepository.findAll();
         return result.stream().map(user ->
-                new UserResponseDTO(user.getId(),user.getName(), user.getUsername(),user.isEnabled()))
+                new UserResponseDTO(user.getId(),user.getName(),user.getUsername(),user.isEnabled()))
                 .collect(Collectors.toList());
     }
 
@@ -56,13 +56,13 @@ public class UserService {
         User userToSave = mapper.map(user,User.class);
         Optional<User> userToEdit = userRepository.findById(user.getId());
         if (!userToEdit.isPresent()){
-            throw new NoItemException("User not found. ");
+            throw new NoItemException("Usuário não encontrado. ");
         }
         userRepository.save(userToSave);
         return new  UserDTO(userToSave.getId(),userToSave.getName(),userToSave.getUsername(),userToSave.getPassword(), userToSave.isEnabled());
     }
 
     public User getByUserName(String username) {
-        return userRepository.findByUserName(username);
+        return userRepository.findByUsername(username);
     }
 }

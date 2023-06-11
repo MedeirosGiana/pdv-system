@@ -47,10 +47,10 @@ public class ProductController {
     public  ResponseEntity delete(@PathVariable Long id){
         try {
             productRepository.deleteById(id);
-            return  new ResponseEntity<>(new ResponseDTO("Product with id " + id + ", successfully removed!"), HttpStatus.OK);
+            return  new ResponseEntity<>(new ResponseDTO("Produto com id" + id + ", removido com sucesso!"), HttpStatus.OK);
 
         } catch (EmptyResultDataAccessException error){
-            return  new ResponseEntity<>(new ResponseDTO("The product could not be found!"),HttpStatus.BAD_REQUEST);
+            return  new ResponseEntity<>(new ResponseDTO("O produto não pode ser encontrado!"),HttpStatus.BAD_REQUEST);
         }
         catch (Exception error){
             return new ResponseEntity<>(new ResponseDTO(error.getMessage()), HttpStatus.NO_CONTENT);

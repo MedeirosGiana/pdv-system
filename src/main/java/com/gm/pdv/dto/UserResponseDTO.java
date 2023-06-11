@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 public class UserResponseDTO {
     private Long id;
     private String name;
-    private String username;
+    private String userName;
     private boolean isEnabled;
 }

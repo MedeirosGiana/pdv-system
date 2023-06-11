@@ -110,11 +110,11 @@ public class SaleService {
             itemSale.setQuantity(item.getQuantity());
             
             if (product.getQuantity() == 0){
-                throw new NoItemException("Product not available in stock.");
+                throw new NoItemException("Produto não encontrado em estoque.");
             } else if (product.getQuantity() < item.getQuantity()) {
                 throw new InvalidOperationException(
-                        String.format("Quantity of items from the sale (%s) " +
-                        "is less than the quantity available in stock (%s) ", item.getQuantity(), product.getQuantity()));
+                        String.format("Quantidade de itens da venda (%s) " +
+                        "é inferior à quantidade disponível em stock (%s) ", item.getQuantity(), product.getQuantity()));
             }
 
             int total = product.getQuantity() - item.getQuantity();

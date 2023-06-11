@@ -35,7 +35,7 @@ public class SaleController {
     public ResponseEntity post(@Valid @RequestBody SaleDTO saleDTO){
         try {
             saleService.save(saleDTO);
-            return  new ResponseEntity<>(new ResponseDTO("Sale successfully carried out!"), HttpStatus.CREATED);
+            return  new ResponseEntity<>(new ResponseDTO("Venda realizada com sucesso!"), HttpStatus.CREATED);
         }
         catch (Exception error){
             return new ResponseEntity<>(new ResponseDTO(error.getMessage()),HttpStatus.INTERNAL_SERVER_ERROR);
