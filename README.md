@@ -39,7 +39,19 @@ git clone https://github.com/MedeirosGiana/pdv-system.git
 ./mvnw spring-boot:run
 ```
 
-1. Ao executar o projeto, pode ser acessado um navegador da Web em **http://localhost:8080/ e as rotas desejadas(user, product, sale)**, siga abaixo exemplo para cadastro de usuário, cadastrar produto em estoque e realizar venda, o formato do arquivo deve estar en JSON.
+1. Utilizar a interface do Postman para testar os endpoints.
+
+2. Para acessar as rotas, utilizar o login: maria.helena e senha:123 para acessar o sistema conforme abaixo e gerar o token de autorização, assim será possível acessar as demais rotas, visto que a segurança de todas as rotas estão ativas.
+
+![image](https://github.com/MedeirosGiana/pdv-system/assets/100285143/edb1089b-fc30-40e5-8614-01b19644b3bb)
+
+
+3. Após realizar o passo 2, será possíveis acessar todas as demais rotas, para isso, selecionar a aba **Headers** do **Postman**, inserir no KEY - **Authorization** e no VALUE - **Bearer** + espaço + o token gerado conforme orientado no passo 2. Siga exemplo abaixo:
+
+![image](https://github.com/MedeirosGiana/pdv-system/assets/100285143/84881373-f13e-4048-822a-6d9318cd318e)
+
+
+4. Após executar o passo 3,  pode ser acessado um navegador da Web em **http://localhost:8080/ e as rotas desejadas(user, product, sale)**, siga abaixo exemplo para cadastro de usuário, cadastrar produto em estoque e realizar venda, o formato do arquivo deve estar em JSON.
 
 ![image](https://github.com/MedeirosGiana/pdv-system/assets/100285143/ed6b0940-d69f-4dbf-be52-8dbcff9843b7)
 
@@ -48,17 +60,6 @@ git clone https://github.com/MedeirosGiana/pdv-system.git
 
 
 ![image](https://github.com/MedeirosGiana/pdv-system/assets/100285143/64dea1a8-0e61-4ebf-ac6c-c64d91c125fc)
-
-
-2. Utilizar a interface do Postman para testar os endpoints.
-
-3. Para acessar as rotas, utilizar o login: maria.helena e senha:123 na aba Authorization conforme abaixo para gerar o token de autorização e assim ser possível acessar as demais rotas, visto que a segurança de todas as rotas estão ativas.
-
-![image](https://github.com/MedeirosGiana/pdv-system/assets/100285143/5b17c1ed-481d-472a-8dab-2c51cc7344bc)
-
-4. Após realizar o passo 3, será possíveis acessar todas as demais rotas, para isso, selecionar a aba **Headers** do **Postman**, inserir no KEY - **Authorization** e no VALUE - **Bearer** + espaço + o token gerado conforme orientado no passo 3. Siga exemplo abaixo:
-
-![image](https://github.com/MedeirosGiana/pdv-system/assets/100285143/fa37f6fd-8723-43da-a0e9-a7bb59c78d81)
 
 
 ## Autora
