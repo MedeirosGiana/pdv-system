@@ -5,6 +5,8 @@
     <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white"/>  
 </p>
 
+[![NPM](https://img.shields.io/npm/l/react)](https://github.com/MedeirosGiana/pdv-system.git/blob/main/LICENSE)
+
 # Sobre o Projeto
 
 PDV-SYSTEM(Ponto de Vendas) é uma aplicação back end construída em Java com Spring Boot para o gerenciamento de vendas, que pode ser aplicado para diferentes seguimentos. Esse projeto em específico foi desenvolvido pensando no segmento de supermercados,
